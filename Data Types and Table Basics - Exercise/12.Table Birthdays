@@ -1,0 +1,8 @@
+CREATE TABLE minions_birthdays(
+	id serial PRIMARY KEY,
+	name VARCHAR(50),
+	date_of_birth date NOT NULL,
+	age INTEGER,
+	present VARCHAR(150),
+	party timestamptz
+)
