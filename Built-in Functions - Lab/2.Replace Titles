@@ -1,7 +1,8 @@
 SELECT
-	replace(title, 'The', '***')
+	replace(title, left(title, 3), '***')
 	FROM books
 WHERE
 	left(title, 3) = 'The'
 ORDER BY id
 ;
+
