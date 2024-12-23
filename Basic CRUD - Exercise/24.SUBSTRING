@@ -1,0 +1,8 @@
+CREATE VIEW view_initials AS
+SELECT
+	first_name::varchar(2) as initial,
+	last_name
+FROM
+	employees
+ORDER BY last_name
+;
