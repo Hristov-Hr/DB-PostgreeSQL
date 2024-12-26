@@ -1,0 +1,13 @@
+SELECT
+	population,
+	length(cast(population AS text))
+FROM
+	countries
+
+----------------------
+
+SELECT
+	population,
+	length(population::text)
+FROM
+	countries
