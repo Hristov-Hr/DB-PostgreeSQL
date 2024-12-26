@@ -1,0 +1,4 @@
+SELECT
+	right(description, -4) AS substring
+FROM
+	currencies
