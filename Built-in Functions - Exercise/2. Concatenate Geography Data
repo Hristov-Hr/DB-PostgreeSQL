@@ -1,0 +1,22 @@
+CREATE VIEW
+	view_continents_countries_currencies_details
+AS SELECT
+	concat_ws(': ', trim(a.continent_name), a.continent_code)
+AS continent_details,
+	concat_ws(' - ', b.country_name, b.capital,
+	b.area_in_sq_km, 'km2')
+AS country_information,
+	concat(c.description, ' (', c.currency_code, ')')
+AS currencies
+FROM continents as a, countries as b, currencies as c
+WHERE
+	a.continent_code = b.continent_code
+	AND
+	b.currency_code = c.currency_code
+
+ORDER BY
+	country_information, currencies
+;
+
+
+SELECT * FROM view_continents_countries_currencies_details
