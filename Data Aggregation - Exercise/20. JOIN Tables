@@ -5,3 +5,12 @@ FROM
 	employees as e
 WHERE
 	e.department_id = d.id
+
+
+----------------------------------------
+
+SELECT
+	*
+FROM departments as d
+	JOIN employees as e
+		ON e.department_id = d.id
