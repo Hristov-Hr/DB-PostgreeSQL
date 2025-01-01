@@ -1,0 +1,19 @@
+SELECT
+	v.driver_id,
+	v.vehicle_type,
+	concat(c.first_name, ' ', c.last_name) as driver_name
+FROM
+	vehicles as v
+	JOIN campers as c
+	ON v.driver_id = c.id
+
+------------------------------------------------------------
+
+SELECT
+	v.driver_id,
+	v.vehicle_type,
+	concat(c.first_name, ' ', c.last_name) as driver_name
+FROM
+	vehicles as v, campers as c
+WHERE
+	v.driver_id = c.id
