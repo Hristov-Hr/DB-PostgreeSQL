@@ -1,0 +1,55 @@
+CREATE TABLE
+	mountains(
+	id serial PRIMARY KEY,
+	name VARCHAR(50)
+	);
+
+CREATE TABLE
+	peaks(
+	id serial PRIMARY KEY,
+	name VARCHAR(50),
+	mountain_id INT,
+	constraint fk_peaks_mountains
+		FOREIGN KEY(mountain_id)
+			REFERENCES mountains(id)
+	)
+
+------------------------------------------------------------------------------
+bez specifichno ime na constraint:
+
+CREATE TABLE
+	mountains(
+	id serial PRIMARY KEY,
+	name VARCHAR(50)
+	);
+
+CREATE TABLE
+	peaks(
+	id serial PRIMARY KEY,
+	name VARCHAR(50),
+	mountain_id INT REFERENCES mountains(id)
+	);
+
+--------------------------------------------------------------------------------
+dobavqne na constraint sled kato e syzdadena tablicata
+
+CREATE TABLE
+	mountains(
+	id serial PRIMARY KEY,
+	name VARCHAR(50)
+	);
+
+CREATE TABLE
+	peaks(
+	id serial PRIMARY KEY,
+	name VARCHAR(50),
+	mountain_id INT
+	);
+
+ALTER TABLE peaks
+ADD CONSTRAINT fk_peaks_mountains
+	FOREIGN KEY(mountain_id)
+		REFERENCES mountains(id)
+
+
+----------------------------------------------------------------------
