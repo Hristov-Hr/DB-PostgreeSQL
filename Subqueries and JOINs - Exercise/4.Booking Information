@@ -1,0 +1,16 @@
+SELECT
+	b.booking_id,
+	a.name as apartment_owner,
+	a.apartment_id,
+	concat(c.first_name, ' ', c.last_name) as customer_name
+FROM
+	customers as c
+	FULL JOIN
+		bookings as b
+		USING (customer_id)
+			FULL JOIN
+				apartments as a
+				USING (booking_id)
+
+ORDER BY
+	b.booking_id, apartment_owner , customer_name
