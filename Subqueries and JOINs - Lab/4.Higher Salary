@@ -1,0 +1,7 @@
+SELECT
+	count(*)
+FROM
+	employees
+
+WHERE
+	salary > (select avg(salary) from employees)
