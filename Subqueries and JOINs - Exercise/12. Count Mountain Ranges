@@ -1,0 +1,11 @@
+SELECT
+	country_code,
+	count(*) as mountain_range_count
+FROM
+	mountains_countries
+GROUP BY
+	country_code
+HAVING
+	country_code IN ('US', 'RU', 'BG')
+ORDER BY
+	mountain_range_count DESC
