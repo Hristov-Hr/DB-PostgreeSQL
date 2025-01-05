@@ -6,4 +6,4 @@ FROM
 FROM
 	countries
 GROUP BY
-	continent_code)
+	continent_code) as min_average_area
