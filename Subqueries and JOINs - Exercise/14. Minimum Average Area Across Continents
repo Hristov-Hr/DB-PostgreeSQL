@@ -1,9 +1,9 @@
 SELECT
-	avg(area_in_sq_km) as min_average_area
+	min(a) as min_average_area
+FROM
+	(SELECT
+	avg(area_in_sq_km) as a
 FROM
 	countries
 GROUP BY
-	continent_code
-ORDER BY
-	min_average_area
-LIMIT 1
+	continent_code)
