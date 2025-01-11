@@ -1,0 +1,33 @@
+SELECT
+	re.country_name,
+	re.highest_peak_name,
+	re.highest_peak_elevation,
+	re.mountain
+FROM
+	(SELECT
+		fq.country_name,
+		COALESCE(fq.peak_name,'(no highest peak)') as highest_peak_name,
+		COALESCE(fq.elevation,0) as highest_peak_elevation,
+		COALESCE(fq.mountain_range, '(no mountain)') as mountain,
+		ROW_NUMBER() OVER (PARTITION BY fq.country_name ORDER BY fq.elevation DESC) AS he
+	FROM
+		(SELECT
+			c.country_name,
+			p.peak_name,
+			p.elevation,
+			m.mountain_range
+		FROM
+			countries as c
+			LEFT JOIN
+				mountains_countries as mc
+			USING(country_code)
+				LEFT JOIN
+					peaks as p
+				USING(mountain_id)
+					LEFT JOIN
+						mountains as m
+					ON
+						m.id = p.mountain_id
+		ORDER BY c.country_name) as fq) as re
+WHERE
+	he = 1
