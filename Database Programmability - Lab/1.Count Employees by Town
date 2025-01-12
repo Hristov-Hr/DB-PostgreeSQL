@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION fn_count_employees_by_town(town_name varchar(20))
+RETURNS int AS
+$$
+	DECLARE
+		count_employees INT;
+	BEGIN
+		SELECT count(employees.employee_id) FROM towns
+			JOIN addresses USING(town_id)
+				JOIN employees USING(address_id)
+				WHERE towns.name = town_name
+				INTO count_employees;
+		RETURN count_employees;
+	END
+$$
+LANGUAGE plpgsql
+;

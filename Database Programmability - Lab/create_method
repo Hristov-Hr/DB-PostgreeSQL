@@ -1,0 +1,84 @@
+CREATE OR REPLACE FUNCTION fn_full_name(varchar, varchar)
+RETURNS varchar AS
+$$
+	BEGIN
+		RETURN concat($1, ' ', $2);
+	END;
+$$
+LANGUAGE plpgsql
+;
+
+SELECT * FROM fn_full_name('Hristo', 'Hristov')
+
+*********************************************************************************
+
+CREATE OR REPLACE FUNCTION fn_full_name(varchar, varchar)
+RETURNS varchar AS
+$$
+	DECLARE
+		first_name ALIAS FOR $1;
+		last_name ALIAS FOR $2;
+		greeting VARCHAR;
+	BEGIN
+		greeting := 'Hello';
+		RETURN concat(greeting, ' ', first_name, ' ', last_name);
+	END;
+$$
+LANGUAGE plpgsql
+;
+
+SELECT * FROM fn_full_name('Hristo', 'Hristov')
+
+**************************************************************************************
+
+CREATE OR REPLACE FUNCTION fn_full_name(first_name varchar, last_name varchar)
+RETURNS varchar AS
+$$
+	DECLARE
+		full_name VARCHAR(30);
+	BEGIN
+		IF first_name IS NULL AND last_name IS NULL THEN
+		full_name := NULL;
+
+		ELSEIF first_name IS NULL THEN
+		full_name := last_name;
+
+		ELSEIF last_name IS NULL THEN
+		full_name := first_name;
+
+		ELSE
+			full_name := concat(first_name, ' ', last_name);
+		END IF;
+		RETURN full_name;
+	END
+$$
+LANGUAGE plpgsql
+;
+
+SELECT * FROM fn_full_name('Hristo', 'Hristov')
+
+******************************************8****************
+
+CREATE OR REPLACE FUNCTION fn_get_city_id(city varchar)
+RETURNS int AS
+$$
+	DECLARE
+		city_id INT;
+	BEGIN
+		SELECT id FROM country WHERE country_name = city INTO city_id;
+		RETURN city_id;
+	END
+$$
+LANGUAGE plpgsql
+;
+INSERT INTO person(id,first_name,last_name,country_id,department)
+VALUES(
+	1001,
+	'Pesho',
+	'Petrov',
+	fn_get_city_id(city: 'Germany')
+	'Python'
+)
+
+****************************************************************************************
+
