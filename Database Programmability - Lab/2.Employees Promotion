@@ -10,3 +10,5 @@ $$
 $$
 LANGUAGE plpgsql
 ;
+
+CALL sp_increase_salaries(department_name: 'Marketing')
