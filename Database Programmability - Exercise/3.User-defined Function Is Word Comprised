@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION
+	fn_is_word_comprised(
+	set_of_letters VARCHAR,
+	word VARCHAR
+	)
+RETURNS BOOLEAN AS
+$$
+	BEGIN
+		IF TRIM(lower(word), lower(set_of_letters)) = ''
+		THEN RETURN true;
+		END IF;
+		RETURN FALSE;
+	END;
+$$
+LANGUAGE plpgsql;
