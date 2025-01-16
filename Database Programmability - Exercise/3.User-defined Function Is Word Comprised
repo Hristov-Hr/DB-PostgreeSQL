@@ -13,3 +13,18 @@ $$
 	END;
 $$
 LANGUAGE plpgsql;
+
+*******************************************************************************
+
+CREATE OR REPLACE FUNCTION
+	fn_is_word_comprised(
+	set_of_letters VARCHAR,
+	word VARCHAR
+	)
+RETURNS BOOLEAN AS
+$$
+	BEGIN
+		RETURN TRIM(lower(word), lower(set_of_letters)) = '';
+	END;
+$$
+LANGUAGE plpgsql;
