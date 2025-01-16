@@ -6,14 +6,10 @@ CREATE OR REPLACE FUNCTION
 	)
 RETURNS DECIMAL AS
 $$
-	DECLARE
-		future_value DECIMAL;
 	BEGIN
-		SELECT
+		RETURN
 		TRUNC(initial_sum *
-		(pow(1 + yearly_interest_rate, number_of_years)),4)
-		INTO future_value;
-		RETURN future_value;
+		(pow(1 + yearly_interest_rate, number_of_years)),4);
 	END;
 $$
 LANGUAGE plpgsql;
