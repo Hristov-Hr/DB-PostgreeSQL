@@ -1,0 +1,52 @@
+CREATE OR REPLACE FUNCTION
+	fn_cash_in_users_games(game_name VARCHAR(50))
+RETURNS TABLE(
+	total_cash NUMERIC)
+AS
+$$
+BEGIN
+	RETURN QUERY
+	SELECT
+		TRUNC(SUM(nt.cash), 2)
+	FROM
+	(SELECT
+		u.cash as cash,
+		ROW_NUMBER()OVER(ORDER BY u.cash DESC) AS r
+	FROM users_games AS u
+	LEFT JOIN games AS g
+	ON g.id = u.game_id
+	WHERE g.name = game_name) AS nt
+	WHERE r % 2 = 1;
+END;
+$$
+LANGUAGE plpgsql;
+
+-------------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION
+	fn_cash_in_users_games(game_name VARCHAR(50))
+RETURNS TABLE(
+	total_cash NUMERIC)
+AS
+$$
+BEGIN
+	RETURN QUERY
+	WITH ranked_games
+	AS (
+		SELECT
+			u.cash as cash,
+			ROW_NUMBER()OVER(ORDER BY u.cash DESC) AS r
+		FROM users_games AS u
+		JOIN games AS g
+		ON g.id = u.game_id
+		WHERE g.name = game_name
+		)
+	SELECT
+		TRUNC(SUM(rg.cash), 2)
+	FROM
+		ranked_games AS rg
+	WHERE
+		rg.r % 2 <> 0;
+END;
+$$
+LANGUAGE plpgsql;
