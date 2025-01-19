@@ -1,0 +1,29 @@
+SELECT
+	b.name,
+	b.rating,
+	c.name as category_name
+FROM
+	board_games as b
+JOIN
+	categories as c
+ON
+	b.category_id = c.id
+WHERE
+	(b.rating > 7.00 AND LOWER(b.name) LIKE '%a%')
+	OR
+	(b.rating > 7.5 AND b.players_range_id in
+		(SELECT
+			bg.players_range_id
+		FROM
+			board_games as bg
+		JOIN
+			players_ranges as p
+		ON
+			p.id = bg.players_range_id
+		WHERE
+			p.min_players = 2 and p.max_players = 5)
+	)
+ORDER BY
+	b.name ASC,
+	b.rating DESC
+LIMIT 5
