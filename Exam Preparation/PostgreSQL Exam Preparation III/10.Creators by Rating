@@ -1,0 +1,25 @@
+SELECT
+	c.last_name,
+	CEIL(AVG(b.rating)) as average_rating,
+	p.name as publisher_name
+FROM
+	creators as c
+	JOIN
+		creators_board_games as cbg
+	ON
+		cbg.creator_id = c.id
+		JOIN
+			board_games as b
+		ON
+			b.id = cbg.board_game_id
+			JOIN
+				publishers as p
+			ON
+				p.id = b.publisher_id
+GROUP BY
+	c.last_name,
+	p.name
+HAVING
+	p.name = 'Stonemaier Games'
+ORDER BY
+	average_rating DESC
