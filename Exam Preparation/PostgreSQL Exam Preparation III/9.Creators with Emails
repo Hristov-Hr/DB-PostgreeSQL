@@ -1,0 +1,19 @@
+SELECT
+	concat(c.first_name, ' ', c.last_name) as full_name,
+	c.email,
+	MAX(b.rating) as rating
+FROM
+	creators as c
+	JOIN
+		creators_board_games as cbg
+	ON
+		c.id = cbg.creator_id
+		JOIN
+			board_games as b
+		ON
+			cbg.board_game_id = b.id
+WHERE
+	c.email LIKE '%.com'
+GROUP BY
+	concat(c.first_name, ' ', c.last_name),
+	c.email
