@@ -1,0 +1,13 @@
+SELECT
+    v.name as volunteers,
+    v.phone_number,
+    trim(v.address, 'Sofia, ') as address
+FROM
+    volunteers as v
+    JOIN volunteers_departments vd on vd.id = v.department_id
+WHERE
+    v.address LIKE '%Sofia%'
+AND
+    vd.department_name = 'Education program assistant'
+ORDER BY
+    v.name;

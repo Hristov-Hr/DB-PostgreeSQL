@@ -1,0 +1,23 @@
+CREATE OR REPLACE PROCEDURE sp_animals_with_owners_or_not(
+    IN animal_name varchar(30),
+    OUT owner_name varchar(30)
+)
+AS
+$$
+    BEGIN
+        SELECT
+             o.name ->->-> или ->->-> coalesce(o.name, 'For adoption') за да махнем if-else клаузите
+        FROM
+            animals a
+            LEFT JOIN owners o ON a.owner_id = o.id
+        WHERE
+            a.name = animal_name
+        INTO owner_name;
+        IF owner_name IS NULL
+            THEN owner_name := 'For adoption';
+        END IF;
+        RETURN;
+    END;
+$$
+LANGUAGE plpgsql;
+
