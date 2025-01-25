@@ -1,0 +1,28 @@
+CREATE OR REPLACE FUNCTION
+	fn_courses_by_client(phone_num VARCHAR(20))
+RETURNS INT
+AS
+$$
+DECLARE number_of_courses INT;
+BEGIN
+	number_of_courses :=
+		(SELECT
+			COUNT(co.*)
+		FROM
+			clients as cl
+			JOIN
+				courses as co
+			ON co.client_id = cl.id
+		WHERE
+			cl.phone_number = phone_num
+		GROUP BY
+			cl.phone_number);
+	IF
+		number_of_courses IS NULL
+		THEN number_of_courses := 0;
+	END IF;
+	RETURN number_of_courses;
+END;
+$$
+LANGUAGE plpgsql
+;

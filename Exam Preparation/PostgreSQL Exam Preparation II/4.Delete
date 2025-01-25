@@ -1,0 +1,16 @@
+DELETE FROM
+	clients
+WHERE
+	id IN
+	(SELECT
+		cl.id
+	FROM
+		clients as cl
+	LEFT JOIN
+		courses as co
+	ON
+		co.client_id = cl.id
+	WHERE
+		co.id IS NULL
+		AND
+		LENGTH(cl.full_name) > 3)

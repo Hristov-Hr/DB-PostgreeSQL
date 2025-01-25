@@ -1,0 +1,27 @@
+SELECT
+	a.name as address,
+	CASE
+		WHEN EXTRACT(HOUR FROM co.start) BETWEEN 6 AND 20 THEN 'Day'
+		ELSE 'Night'
+	END as day_time,
+	co.bill,
+	cl.full_name,
+	ca.make,
+	ca.model,
+	ct.name as category_name
+FROM
+	courses as co
+	JOIN
+		addresses as a
+		ON co.from_address_id = a.id
+	JOIN
+		clients as cl
+		ON cl.id = co.client_id
+	JOIN
+		cars as ca
+		ON ca.id = co.car_id
+	JOIN
+		categories as ct
+		ON ct.id = ca.category_id
+ORDER BY
+	co.id
