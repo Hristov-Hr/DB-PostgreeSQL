@@ -1,0 +1,19 @@
+SELECT
+    i.name as ingredient_name,
+    p.name as product_name,
+    d.name as distributor_name
+FROM
+    ingredients i
+    JOIN distributors as d
+        ON i.distributor_id = d.id
+    JOIN products_ingredients as pi
+        ON i.id = pi.ingredient_id
+    JOIN products as p
+        ON pi.product_id = p.id
+
+WHERE
+    lower(i.name) LIKE '%mustard%'
+AND
+    d.country_id = 16
+ORDER BY
+    product_name
