@@ -1,0 +1,19 @@
+CREATE OR REPLACE FUNCTION fn_stadium_team_name(
+    stadium_name varchar(30)
+)
+RETURNS TABLE(teams_name varchar(30))
+AS
+$$
+    BEGIN
+        RETURN QUERY
+        (SELECT
+            t.name
+        FROM
+            teams as t
+        JOIN stadiums as s ON t.stadium_id = s.id
+        WHERE s.name = stadium_name
+        ORDER BY
+            t.name);
+    end;
+$$
+LANGUAGE plpgsql;

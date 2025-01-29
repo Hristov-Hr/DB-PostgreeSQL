@@ -1,0 +1,20 @@
+SELECT
+   concat(c.first_name, ' ', c.last_name) as coach_full_name,
+   concat(p.first_name, ' ', p.last_name) as player_full_name,
+   t.name as team_name,
+   sd.passing,
+   sd.shooting,
+   sd.speed
+FROM
+    coaches as c
+LEFT JOIN
+        players_coaches as pc ON c.id = pc.coach_id
+JOIN
+        players as p ON pc.player_id = p.id
+JOIN
+        teams as t ON p.team_id = t.id
+JOIN
+        skills_data as sd ON p.skills_data_id = sd.id
+ORDER BY
+    coach_full_name,
+    player_full_name DESC

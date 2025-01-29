@@ -1,0 +1,13 @@
+SELECT
+   t.id as team_id,
+   t.name as team_name,
+   count(p.*) as player_count,
+   t.fan_base
+FROM
+    players as p
+RIGHT JOIN teams as t ON p.team_id = t.id
+WHERE fan_base > 30000
+GROUP BY t.id, t.name, t.fan_base
+ORDER BY
+    player_count DESC ,
+    fan_base DESC
