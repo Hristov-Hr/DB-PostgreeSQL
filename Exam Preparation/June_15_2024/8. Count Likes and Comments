@@ -1,0 +1,14 @@
+SELECT
+    p.id as photo_id,
+    count(distinct l) as likes_count,
+    count(distinct c) as comments_count
+FROM
+    photos as p
+    LEFT JOIN likes as l ON p.id = l.photo_id
+    LEFT JOIN comments as c ON p.id = c.photo_id
+GROUP BY p.id
+ORDER BY
+    likes_count DESC,
+    comments_count DESC,
+    photo_id
+;

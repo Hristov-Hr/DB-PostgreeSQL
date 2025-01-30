@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION udf_accounts_photos_count(
+    account_username VARCHAR(30)
+)
+RETURNS INT
+AS
+$$
+    BEGIN
+        RETURN (
+            SELECT
+                count(p.*)
+            FROM
+                accounts as a
+                LEFT JOIN accounts_photos as p ON a.id = p.account_id
+            WHERE
+                a.username = account_username
+            GROUP BY
+                a.id
+            );
+    end;
+$$
+LANGUAGE plpgsql;
