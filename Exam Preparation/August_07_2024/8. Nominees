@@ -1,0 +1,14 @@
+SELECT
+    c.name as country_name,
+    count(p.country_id) as productions_count,
+    coalesce(avg(i.budget), 0) as avg_budget
+FROM
+    countries c
+    LEFT JOIN productions p on c.id = p.country_id
+    LEFT JOIN productions_info i on p.production_info_id = i.id
+GROUP BY c.name
+HAVING
+    count(p.country_id) > 0
+ORDER BY
+    productions_count DESC,
+    country_name

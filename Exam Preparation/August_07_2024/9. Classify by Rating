@@ -1,0 +1,21 @@
+SELECT
+    p.title as title,
+    (CASE
+        WHEN i.rating <= 3.5 THEN 'poor'
+        WHEN i.rating <= 8 THEN 'good'
+        ELSE 'excellent'
+        END) as rating,
+    (CASE
+        WHEN i.has_subtitles THEN 'Bulgarian'
+        ELSE 'N/A'
+        END) as subtitles,
+    count(a.actor_id) as actors_count
+FROM
+    productions p
+    LEFT JOIN productions_info i ON p.production_info_id = i.id
+    LEFT JOIN productions_actors a ON p.id = a.production_id
+GROUP BY p.title, rating, subtitles
+ORDER BY
+    rating,
+    actors_count DESC,
+    title

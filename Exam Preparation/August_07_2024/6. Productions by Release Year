@@ -1,0 +1,18 @@
+SELECT
+    p.id,
+    p.title,
+    i.duration,
+    round(i.budget, 1) as budget,
+    to_char(i.release_date, 'MM-YY') as release_date
+FROM
+    productions p
+    JOIN productions_info i on p.production_info_id = i.id
+WHERE
+    extract('year' FROM i.release_date) IN (2023, 2024)
+AND
+    i.budget > 1500000.00
+ORDER BY
+    budget,
+    i.duration DESC,
+    p.id
+LIMIT 3

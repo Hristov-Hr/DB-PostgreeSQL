@@ -1,0 +1,21 @@
+CREATE OR REPLACE FUNCTION udf_category_productions_count(
+    category_name VARCHAR(50)
+)
+RETURNS varchar
+AS
+$$
+    BEGIN
+        RETURN
+            concat('Found ',
+            coalesce((
+                SELECT
+                    count(p)
+                FROM
+                    categories c
+                JOIN categories_productions p ON c.id = p.category_id
+                WHERE c.name = category_name
+                GROUP BY c.id
+                ), 0), ' productions.');
+    end;
+$$
+LANGUAGE plpgsql;

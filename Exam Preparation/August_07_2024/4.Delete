@@ -1,0 +1,16 @@
+DELETE FROM countries
+WHERE
+    id IN
+    (
+        SELECT
+            c.id
+        FROM
+            countries c
+            LEFT JOIN  actors a ON c.id = a.country_id
+            LEFT JOIN productions p ON c.id = p.country_id
+        WHERE
+            a.id IS NULL
+        AND
+            p.id IS NULL
+        )
+;
